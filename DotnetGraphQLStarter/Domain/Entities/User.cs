@@ -15,8 +15,12 @@ public class User : BaseEntity
     [StringLength(100)] 
     public string Email { get; set; } = null!;
     [Required] 
-    [StringLength(200)] 
-    public string Password { get; set; } = null!;
+    [StringLength(400)] 
+    public byte[] PasswordHash { get; set; } = null!;
+    
+    [Required] 
+    [StringLength(400)] 
+    public byte[] PassworSalt { get; set; } = null!;
     
     public ICollection<Training> Trainings { get; set; } =
         new List<Training>();

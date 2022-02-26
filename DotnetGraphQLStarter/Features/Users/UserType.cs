@@ -1,10 +1,10 @@
 using DotnetGraphQLStarter.Data;
 using DotnetGraphQLStarter.Domain.Entities;
 using DotnetGraphQLStarter.Extensions.GraphQL;
-using DotnetGraphQLStarter.GraphQL.DataLoader;
+using DotnetGraphQLStarter.Features.Trainings;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotnetGraphQLStarter.GraphQL.Types;
+namespace DotnetGraphQLStarter.Features.Users;
 
 public class UserType : ObjectType<User>
 {

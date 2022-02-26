@@ -1,9 +1,7 @@
 using DotnetGraphQLStarter.Domain.Entities;
 using DotnetGraphQLStarter.Features.Users;
-using DotnetGraphQLStarter.GraphQL.DataLoader;
-using Microsoft.EntityFrameworkCore;
 
-namespace DotnetGraphQLStarter.GraphQL.Types;
+namespace DotnetGraphQLStarter.Features.Trainings;
 
 public class TrainingType : ObjectType<Training>
 {

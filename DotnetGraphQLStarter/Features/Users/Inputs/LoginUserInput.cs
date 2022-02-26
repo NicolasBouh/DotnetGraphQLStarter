@@ -1,3 +1,5 @@
 namespace DotnetGraphQLStarter.Features.Users.Inputs;
 
-public record LoginUserInput();
+public record LoginUserInput(
+    string Email, 
+    string Password);

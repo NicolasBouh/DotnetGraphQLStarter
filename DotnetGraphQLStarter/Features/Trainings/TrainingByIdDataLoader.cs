@@ -2,7 +2,7 @@ using DotnetGraphQLStarter.Data;
 using DotnetGraphQLStarter.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotnetGraphQLStarter.GraphQL.DataLoader;
+namespace DotnetGraphQLStarter.Features.Trainings;
 
 public class TrainingByIdDataLoader : BatchDataLoader<int, Training>
 {

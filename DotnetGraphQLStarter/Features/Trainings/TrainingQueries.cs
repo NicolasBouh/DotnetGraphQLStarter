@@ -1,10 +1,9 @@
 using DotnetGraphQLStarter.Data;
 using DotnetGraphQLStarter.Domain.Entities;
 using DotnetGraphQLStarter.Extensions.GraphQL;
-using DotnetGraphQLStarter.GraphQL.DataLoader;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotnetGraphQLStarter.GraphQL.Queries;
+namespace DotnetGraphQLStarter.Features.Trainings;
 
 [ExtendObjectType("Query")]
 public class TrainingQueries

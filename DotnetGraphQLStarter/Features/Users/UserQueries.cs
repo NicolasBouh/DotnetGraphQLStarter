@@ -1,21 +1,41 @@
+using System.Security.Claims;
 using DotnetGraphQLStarter.Data;
 using DotnetGraphQLStarter.Domain.Entities;
 using DotnetGraphQLStarter.Extensions.GraphQL;
-using DotnetGraphQLStarter.GraphQL.DataLoader;
+using DotnetGraphQLStarter.Features.Users.Outputs;
+using HotChocolate.AspNetCore.Authorization;
+using HotChocolate.Data;
+using HotChocolate.Resolvers;
 using Microsoft.EntityFrameworkCore;
 
-namespace DotnetGraphQLStarter.GraphQL.Queries;
+namespace DotnetGraphQLStarter.Features.Users;
 
 [ExtendObjectType("Query")]
 public class UserQueries
 {
     [UseApplicationDbContext]
-    public Task<List<User>> GetUsers([ScopedService] ApplicationDbContext context) =>
-        context.Users.ToListAsync();
-
-    public Task<User> GetUserAsync(
+    public async Task<List<UserDto>> GetUsers(
+        [ScopedService] ApplicationDbContext 
+        dbContext, IResolverContext context) =>
+            await dbContext.Users.ProjectTo<User, UserDto>(context).ToListAsync();
+    
+    [UseApplicationDbContext]
+    public async Task<UserDto?> GetUserAsync(
         [ID(nameof(User))]int id,
-        UserByIdDataLoader dataLoader,
-        CancellationToken cancellationToken) =>
-        dataLoader.LoadAsync(id, cancellationToken);
+        [ScopedService] ApplicationDbContext dbContext, 
+        IResolverContext context) =>
+            await dbContext.Users.ProjectTo<User, UserDto>(context)
+                .FirstOrDefaultAsync(x => x.Id == id);
+    
+    [Authorize]
+    [UseApplicationDbContext]
+    public async Task<UserDto?> GetCurrentUserAsync(
+        [ScopedService] ApplicationDbContext dbContext, 
+        ClaimsPrincipal claimsPrincipal,
+        IResolverContext context) {
+        var userId = int.Parse(claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier));
+        
+        return await dbContext.Users.ProjectTo<User, UserDto>(context)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+    }
 }

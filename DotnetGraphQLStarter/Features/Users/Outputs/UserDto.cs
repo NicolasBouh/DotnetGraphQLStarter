@@ -1,6 +1,6 @@
 namespace DotnetGraphQLStarter.Features.Users.Outputs;
 
-public class UserResponse
+public class UserDto
 {
     public int Id { get; set; }
     public string FirstName { get; set; } = null!;

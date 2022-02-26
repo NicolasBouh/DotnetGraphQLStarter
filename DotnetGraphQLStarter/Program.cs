@@ -1,24 +1,22 @@
-using DotnetGraphQLStarter.Data;
-using DotnetGraphQLStarter.GraphQL;
-using DotnetGraphQLStarter.GraphQL.DataLoader;
-using Microsoft.EntityFrameworkCore;
+using DotnetGraphQLStarter.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddPooledDbContextFactory<ApplicationDbContext>(options => 
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddInfrastructureLayer(builder.Configuration);
 
-builder.Services.AddGraphQLServer()
-    .AddQueryType<Query>()
-    .AddMutationType<Mutation>()
-    .AddDataLoader<UserByIdDataLoader>()
-    .AddDataLoader<TrainingByIdDataLoader>();
+builder.Services.AddAutoMapper();
+
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
+builder.Services.AddServicesLayer();
+
+builder.Services.AddGraphQLayer();
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
 var app = builder.Build();
 
@@ -30,7 +28,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthentication();
 
 app.UseRouting();
 app.UseEndpoints(endpoints =>
