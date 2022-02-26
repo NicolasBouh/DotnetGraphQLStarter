@@ -3,9 +3,10 @@ using DotnetGraphQLStarter.Domain.Entities;
 using DotnetGraphQLStarter.Extensions.GraphQL;
 using DotnetGraphQLStarter.Users;
 
-namespace DotnetGraphQLStarter.GraphQL;
+namespace DotnetGraphQLStarter.GraphQL.Mutations;
 
-public class Mutation
+[ExtendObjectType("Mutation")]
+public class UserMutations
 {
     [UseApplicationDbContext]
     public async Task<AddUserPayload> AddUserAsync(
